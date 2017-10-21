@@ -92,3 +92,7 @@ form input[type=text] {
 .viewtoggle {
     display: none;
 }
+
+.isbold {
+    font-weight: bold;
+}

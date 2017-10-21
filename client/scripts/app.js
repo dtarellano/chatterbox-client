@@ -53,6 +53,8 @@ $(document).ready(function() {
     console.log(storage);
   });
   
+  var currentRoom;
+  
   // Add friends
   $('#chats').on('click', '.chat', function(e) {
     var userNameClass = $(this).val();
@@ -69,7 +71,6 @@ $(document).ready(function() {
     $('.viewtoggle').hide();
     $(`.${room}`).show();
   };
-  var currentRoom;
   $('#rooms').change(function() {
     toggleChat($(this).val());
     currentRoom = $(this).val();
@@ -77,9 +78,12 @@ $(document).ready(function() {
   
   $('form').submit(function(e) {
     e.preventDefault();
+    if ($('.chooseroom').val()) {
+      currentRoom = $('.chooseroom').val();
+    }
     $.post('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages', 
       {
-        username: 'Pacman',
+        username: 'frenchfries',
         text: $('.messagebox').val(),
         roomname: currentRoom
       });
