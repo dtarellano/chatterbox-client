@@ -1,11 +1,6 @@
 var storage;
-
-// $.get('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages', function(data) {
-//   storage = data;
-
-// });
 $(document).ready(function() {
-
+  // Fetch Data
   var getContent = function(callback) {
     $.get('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages', function(data) {
       callback(data);
@@ -14,11 +9,10 @@ $(document).ready(function() {
   
   getContent(function(data) {  
     var storage = data.results;
-    console.log(data);
     var array = [];  
     for (var i = 0; i < storage.length; i++) {
       var roomName = storage[i].roomname;
-      
+      // Filter out undefined or null text and rooms
       if (roomName === undefined || roomName === null) {
         roomName = '';
       } else {
@@ -27,7 +21,8 @@ $(document).ready(function() {
       if (!array.includes(roomName) && roomName !== undefined && roomName !== null && roomName !== '') {
         array.push(roomName);
       }
-
+      
+      // Creating all Chats
       var element = document.createElement('div');
       var userName = storage[i].username;
       var text = storage[i].text;
@@ -39,7 +34,7 @@ $(document).ready(function() {
       $(`#${element.id}`).addClass(`${roomName} viewtoggle`);           
     }
     
-    console.log(array);
+    // Create Room Toggle
     for (var j = 0; j < array.length; j++) {
       var option = document.createElement('option');
       option.className = `${j} selected`;
@@ -49,10 +44,9 @@ $(document).ready(function() {
     }
      
   });
+  
+  // Change Chat Rooms
   var toggleChat = function(room) {
-    debugger;
-    //$('.viewtoggle').toggle('.viewtoggle');
-    //$(`.${room}`).toggle('.viewtoggle');
     $('.viewtoggle').hide();
     $(`.${room}`).show();
   };
@@ -61,9 +55,6 @@ $(document).ready(function() {
 
     toggleChat($(this).val());
   });
-    
-});
-    // var element = document.createElement('div');
   
-    
-//console.log(storage);
+  $('.messagebox').on('')
+});
