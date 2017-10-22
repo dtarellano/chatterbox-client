@@ -1,5 +1,46 @@
+
+
+var app = {
+  init: function() {
+    
+  },
+  send: function(message) { 
+    console.log(message);
+    
+    $.ajax({
+      // This is the url you should use to communicate with the parse API server.
+      url: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+      type: 'POST',
+      data: JSON.stringify(message),
+      contentType: 'application/json',
+      success: function (data) {
+        console.log('chatterbox: Message sent', data);
+      },
+      error: function (data) {
+        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+        console.error('chatterbox: Failed to send message', data);
+      }
+    });
+  },
+  fetch: function() {
+
+  },
+  clearMessages: function() {
+    
+  },
+  renderMessage: function(message) {
+    
+  },
+  renderRoom: function(room) {
+    
+  }
+};
+
+
+
 var storage;
 $(document).ready(function() {
+  var user = window.location.search.split('?username=')[1];
   // Fetch Data
   var getContent = function(callback) {
     $.get('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages' + '?order=-createdAt', function(data) {
@@ -81,12 +122,18 @@ $(document).ready(function() {
     if ($('.chooseroom').val()) {
       currentRoom = $('.chooseroom').val();
     }
-    $.post('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages', 
-      {
-        username: 'frenchfries',
-        text: $('.messagebox').val(),
-        roomname: currentRoom
-      });
+    // $.post('http://parse.sfm8.hackreactor.com/chatterbox/classes/messages', 
+    //   {
+    //     username: 'frenchfries',
+    //     text: $('.messagebox').val(),
+    //     roomname: currentRoom
+    //   });
+    var message = {
+      username: user,
+      text: $('.messagebox').val(),
+      roomname: currentRoom
+    };
+    app.send(message);
   });
 
 });
